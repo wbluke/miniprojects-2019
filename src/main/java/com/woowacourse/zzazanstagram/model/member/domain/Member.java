@@ -4,6 +4,7 @@ import com.woowacourse.zzazanstagram.model.common.BaseEntity;
 import com.woowacourse.zzazanstagram.model.member.domain.vo.*;
 
 import javax.persistence.Entity;
+import java.util.Objects;
 
 @Entity
 public class Member extends BaseEntity {
