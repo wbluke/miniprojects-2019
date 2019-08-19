@@ -1,6 +1,7 @@
 package com.woowacourse.zzazanstagram.model.article.dto;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ArticleResponse {
     private Long id;
@@ -111,5 +112,24 @@ public class ArticleResponse {
         public ArticleResponse build() {
             return new ArticleResponse(id, image, contents, nickName, profileImage, createdDate, lastModifiedDate);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArticleResponse response = (ArticleResponse) o;
+        return Objects.equals(id, response.id) &&
+                Objects.equals(image, response.image) &&
+                Objects.equals(contents, response.contents) &&
+                Objects.equals(nickName, response.nickName) &&
+                Objects.equals(profileImage, response.profileImage) &&
+                Objects.equals(createdDate, response.createdDate) &&
+                Objects.equals(lastModifiedDate, response.lastModifiedDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, image, contents, nickName, profileImage, createdDate, lastModifiedDate);
     }
 }
