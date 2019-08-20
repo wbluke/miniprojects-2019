@@ -1,8 +1,9 @@
 package com.woowacourse.zzazanstagram.model.comment.service;
 
 import com.woowacourse.zzazanstagram.model.article.domain.Article;
-import com.woowacourse.zzazanstagram.model.article.exception.ArticleException;
-import com.woowacourse.zzazanstagram.model.article.repository.ArticleRepository;
+import com.woowacourse.zzazanstagram.model.article.dto.ArticleResponse;
+import com.woowacourse.zzazanstagram.model.article.service.ArticleAssembler;
+import com.woowacourse.zzazanstagram.model.article.service.ArticleService;
 import com.woowacourse.zzazanstagram.model.comment.domain.Comment;
 import com.woowacourse.zzazanstagram.model.comment.domain.vo.CommentContents;
 import com.woowacourse.zzazanstagram.model.comment.dto.CommentRequest;
@@ -15,43 +16,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CommentService {
-
     @Autowired
     MemberService memberService;
 
     @Autowired
-    ArticleRepository articleRepository;
+    ArticleService articleService;
 
     @Autowired
     CommentRepository commentRepository;
 
     public CommentResponse save(CommentRequest commentRequest, String email) {
         CommentContents commentContents = CommentContents.of(commentRequest.getCommentContents());
-        Article article = articleRepository.findById(commentRequest.getArticleId()).orElseThrow(() -> new ArticleException("게시글을 찾을 수 없습니다."));
+        ArticleResponse articleResponse = articleService.getArticleResponse(commentRequest.getArticleId());
         Member member = memberService.findMemberByEmail(email);
+        Article article = ArticleAssembler.toEntity(articleResponse, member);
 
         Comment comment = new Comment(commentContents, article, member);
         Comment saveComment = commentRepository.save(comment);
 
         return CommentAssembler.toDto(saveComment);
     }
-//    @Autowired
-//    MemberService memberService;
-//
-//    @Autowired
-//    ArticleService articleService;
-//
-//    @Autowired
-//    CommentRepository commentRepository;
-//
-//    public CommentResponse save(CommentRequest commentRequest, String email) {
-//        CommentContents commentContents = CommentContents.of(commentRequest.getCommentContents());
-//        ArticleResponse articleResponse = articleService.getArticleResponse(commentRequest.getArticleId());
-//        Member member = memberService.findMemberByEmail(email);
-//
-//        Comment comment = new Comment(commentContents, article, member);
-//        Comment saveComment = commentRepository.save(comment);
-//
-//        return CommentAssembler.toDto(saveComment);
-//    }
 }

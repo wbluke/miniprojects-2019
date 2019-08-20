@@ -17,6 +17,13 @@ public class ArticleAssembler {
         return new Article(image, contents, author);
     }
 
+    public static Article toEntity(ArticleResponse dto, Member author) {
+        Image image = Image.of(dto.getImage());
+        Contents contents = Contents.of(dto.getContents());
+
+        return new Article(image, contents, author);
+    }
+
     public static ArticleResponse toDto(Article article) {
         Long id = article.getId();
         LocalDateTime createdDate = article.getCreatedDate();
