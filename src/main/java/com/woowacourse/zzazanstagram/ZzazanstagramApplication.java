@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class ZzazanstagramApplication {
     public static final String APPLICATION_LOCATIONS = "spring.config.location="
             + "classpath:application.properties,"
-            + "classpath:aws.yml";
+            + "classpath:aws.properties";
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(ZzazanstagramApplication.class)

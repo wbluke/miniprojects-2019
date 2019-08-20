@@ -1,4 +1,4 @@
-package com.woowacourse.zzazanstagram.model.article.controller;
+package com.woowacourse.zzazanstagram.web.controller.article;
 
 import com.woowacourse.zzazanstagram.model.RequestTemplate;
 import org.junit.jupiter.api.Test;
@@ -32,10 +32,9 @@ class ArticleControllerTest extends RequestTemplate {
     @Test
     void 게시글_조회가_잘되는지_테스트() {
         createArticle();
-
         showArticles().expectBody().consumeWith(res -> {
             String body = new String(res.getResponseBody());
-            assertThat(body.contains(IMAGE_URL)).isTrue();
+            assertThat(body.contains(CONTENTS)).isTrue();
         });
     }
 

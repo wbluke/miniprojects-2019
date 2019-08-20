@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,8 +16,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Profile("dev")
 @Component
-public class S3Uploader {
+public class S3Uploader implements FileUploader {
     private static final Logger log = LoggerFactory.getLogger(S3Uploader.class);
 
     private final AmazonS3 amazonS3Client;
@@ -29,7 +31,6 @@ public class S3Uploader {
     private String bucket;
 
     public String upload(MultipartFile multipartFile, String dirName) {
-        //TODO 초기화를 NUll로 할 지 그대로 둘지
         File uploadFile;
         try {
             uploadFile = convert(multipartFile)

@@ -3,6 +3,7 @@ package com.woowacourse.zzazanstagram.model.article.service;
 import com.woowacourse.zzazanstagram.model.article.domain.Article;
 import com.woowacourse.zzazanstagram.model.article.dto.ArticleRequest;
 import com.woowacourse.zzazanstagram.model.article.dto.ArticleResponse;
+import com.woowacourse.zzazanstagram.model.article.exception.ArticleException;
 import com.woowacourse.zzazanstagram.model.article.repository.ArticleRepository;
 import com.woowacourse.zzazanstagram.model.member.domain.Member;
 import com.woowacourse.zzazanstagram.model.member.service.MemberService;
@@ -36,18 +37,21 @@ public class ArticleService {
 
     public List<ArticleResponse> getArticleResponses() {
         List<Article> articles = articleRepository.findAllByOrderByIdDesc();
-
         return articles.stream()
                 .map(ArticleAssembler::toDto)
                 .collect(Collectors.toList());
     }
 
+    public ArticleResponse getArticleResponse(Long id) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new ArticleException("해당 게시글이 존재하지 않습니다."));
+        return ArticleAssembler.toDto(article);
+    }
+
     public void save(ArticleRequest dto, MultipartFile file, String email) {
         Member author = memberService.findMemberByEmail(email);
         String imageUrl = s3Uploader.upload(file, dirName);
-        //TODO
-        // ArticleRequestDTO에 Set으로 URL넣어주기
-        // 어셈블러에 파라미터로 URL넣어주기
+
         Article article = ArticleAssembler.toEntity(dto, imageUrl, author);
         articleRepository.save(article);
 
