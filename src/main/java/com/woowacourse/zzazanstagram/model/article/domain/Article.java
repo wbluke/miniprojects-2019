@@ -20,13 +20,13 @@ public class Article extends BaseEntity {
     @JoinColumn(name = "author", nullable = false, foreignKey = @ForeignKey(name = "fk_article_to_member"))
     private Member author;
 
-    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     protected Article() {
     }
 
-    public Article (final Image image, final Contents contents, final Member author) {
+    public Article(final Image image, final Contents contents, final Member author) {
         this.image = image;
         this.contents = contents;
         this.author = author;
@@ -60,6 +60,5 @@ public class Article extends BaseEntity {
     public void addComments(Comment comment) {
         comments.add(comment);
     }
-
 
 }

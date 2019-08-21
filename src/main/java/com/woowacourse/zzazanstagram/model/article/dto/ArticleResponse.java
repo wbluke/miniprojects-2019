@@ -1,6 +1,9 @@
 package com.woowacourse.zzazanstagram.model.article.dto;
 
+import com.woowacourse.zzazanstagram.model.comment.dto.CommentResponse;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ArticleResponse {
     private Long id;
@@ -11,10 +14,21 @@ public class ArticleResponse {
     private String profileImage;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
-
+    private List<CommentResponse> commentResponses;
     //Todo 댓글, 좋아요 추가하자
 
     public ArticleResponse() {
+    }
+
+    private ArticleResponse(Long id, String image, String contents, String nickName, String profileImage, LocalDateTime createdDate, LocalDateTime lastModifiedDate, List<CommentResponse> commentResponses) {
+        this.id = id;
+        this.image = image;
+        this.contents = contents;
+        this.nickName = nickName;
+        this.profileImage = profileImage;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+        this.commentResponses = commentResponses;
     }
 
     private ArticleResponse(Long id, String image, String contents, String nickName, String profileImage, LocalDateTime createdDate, LocalDateTime lastModifiedDate) {
@@ -55,8 +69,12 @@ public class ArticleResponse {
         return lastModifiedDate;
     }
 
+    public List<CommentResponse> getCommentResponses() {
+        return commentResponses;
+    }
 
     public static final class ArticleResponseBuilder {
+
         private Long id;
         private String image;
         private String contents;
@@ -65,6 +83,7 @@ public class ArticleResponse {
         private String profileImage;
         private LocalDateTime createdDate;
         private LocalDateTime lastModifiedDate;
+        private List<CommentResponse> commentResponses;
 
         private ArticleResponseBuilder() {
         }
@@ -108,8 +127,13 @@ public class ArticleResponse {
             return this;
         }
 
+        public ArticleResponseBuilder commentResponses(List<CommentResponse> commentResponses) {
+            this.commentResponses = commentResponses;
+            return this;
+        }
+
         public ArticleResponse build() {
-            return new ArticleResponse(id, image, contents, nickName, profileImage, createdDate, lastModifiedDate);
+            return new ArticleResponse(id, image, contents, nickName, profileImage, createdDate, lastModifiedDate, commentResponses);
         }
     }
 }

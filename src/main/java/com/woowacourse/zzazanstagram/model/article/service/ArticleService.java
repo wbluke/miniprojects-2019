@@ -58,4 +58,9 @@ public class ArticleService {
         log.info("{} imageUrl : {}", TAG, imageUrl);
         log.info("{} create() >> {}", TAG, article);
     }
+
+    public Article getArticle(long articleId) {
+        return articleRepository.findById(articleId)
+                .orElseThrow(() -> new ArticleException("해당 게시글이 존재하지 않습니다."));
+    }
 }

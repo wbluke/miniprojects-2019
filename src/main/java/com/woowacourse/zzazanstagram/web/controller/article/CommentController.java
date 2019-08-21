@@ -1,10 +1,11 @@
 package com.woowacourse.zzazanstagram.web.controller.article;
 
-import com.woowacourse.zzazanstagram.model.comment.dto.CommentRequest;
+import com.woowacourse.zzazanstagram.model.comment.domain.vo.CommentContents;
 import com.woowacourse.zzazanstagram.model.comment.dto.CommentResponse;
 import com.woowacourse.zzazanstagram.model.comment.service.CommentService;
 import com.woowacourse.zzazanstagram.model.member.MemberSession;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,9 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/comments/new")
-    public ResponseEntity<CommentResponse> createComment(@RequestBody CommentRequest commentRequest, MemberSession memberSession) {
-        CommentResponse commentResponse = commentService.save(commentRequest, memberSession.getEmail());
+    @PostMapping("/{articleId}/comments/new")
+    public ResponseEntity<CommentResponse> createComment(@PathVariable Long articleId, @RequestBody CommentContents commentContents, MemberSession memberSession) {
+        CommentResponse commentResponse = commentService.save(commentContents, articleId, memberSession.getEmail());
         return ResponseEntity.ok(commentResponse);
     }
 }
