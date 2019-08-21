@@ -59,8 +59,12 @@ public class ArticleService {
         log.info("{} create() >> {}", TAG, article);
     }
 
+    //TODO 메서드 중복 제거
     public Article getArticle(long articleId) {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new ArticleException("해당 게시글이 존재하지 않습니다."));
+
+    public Article findArticleById(Long articleId) {
+        return articleRepository.findById(articleId).orElseThrow(() -> new ArithmeticException("해당 게시글을 찾을 수 없습니다."));
     }
 }

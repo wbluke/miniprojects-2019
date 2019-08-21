@@ -47,6 +47,14 @@
     margin-top: 590px;
 }
 
+#profile {
+    display: flex;
+}
+
+.my-page-profile-img {
+    width: 150px;
+}
+
 .float-left {
     float: left;
 }
@@ -59,4 +67,20 @@
     clear: none;
 }
 
+.text-color-red {
+    color: red;
+}
+
+.align-self-center {
+    align-self: center;
+}
+
+.article-bg-img {
+    background-position: center center;
+    height: 310px;
+}
+
+.mrg-top-240 {
+    margin-top: 240px;
+}
 

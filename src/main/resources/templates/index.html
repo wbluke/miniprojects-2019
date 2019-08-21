@@ -41,72 +41,74 @@
 </head>
 <body>
 <div>
-    <header id="header" class="header navbar">
-        <div class="header-container max-width-lg mx-auto">
-            <ul class="nav-left mrg-left-0 padding-15">
-                <li>
-                    <img class="logo desktop-view mrg-top-5" src="/images/logo/zzazanstagram.png">
-                </li>
-                <li class="search-box mrg-left-20 desktop-view">
-                    <a class="search-toggle no-pdd-right" href=";">
-                        <i class="search-icon ti-search pdd-right-10 font-size-25"></i>
-                        <i class="search-icon-close ti-close pdd-right-10 font-size-25"></i>
-                    </a>
-                </li>
-                <li class="search-input desktop-view">
-                    <input class="form-control mrg-top-0" type="text" placeholder="Search...">
-                    <div class="advanced-search">
-                        <div class="search-wrapper">
-                            <div class="pdd-vertical-10">
-                                <ul class="list-unstyled list-info">
-                                    <li class="search-result-item">
-                                        <a href="" class="text-dark">#우테코 1기</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <ul class="nav-right padding-15">
-
-                <li class="">
-                    <a class="pointer" href="/articles/new">
-                        <i class="ti-pencil-alt"></i>
-                    </a>
-                </li>
-                <li>
-                    <a class="pointer">
-                        <i class="ti-heart"></i>
-                    </a>
-                </li>
-                <li>
-                    <a class="pointer">
-                        <i class="ti-user"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </header>
-
-    <div class="page-container mrg-top-120">
-        <div class="main-content">
-            <div class="container-fluid max-width-lg mx-auto">
-                <div class="row">
-                    <div class="col-lg-7 mx-auto">
-
-                        <div th:each="article : ${articles}" class="card widget-feed no-pdd mrg-btm-70">
-                            <div class="feed-header padding-15">
-                                <ul class="list-unstyled list-info">
-                                    <li>
-                                        <img class="thumb-img img-circle" th:src="${article.profileImage}" alt="">
-                                        <div class="info">
-                                            <a th:text="${article.nickName}" href=""
-                                               class="title no-pdd-vertical text-bold inline-block font-size-15"></a>
-                                        </div>
-                                    </li>
-                                    <a class="pointer absolute top-10 right-0" data-toggle="dropdown"
-                                       aria-expanded="false">
+	<header id="header" class="header navbar">
+		<div class="header-container max-width-lg mx-auto">
+			<ul class="nav-left mrg-left-0 padding-15">
+				<li>
+					<a href="/">
+						<img class="logo desktop-view mrg-top-5" src="/images/logo/zzazanstagram.png">
+					</a>
+				</li>
+				<li class="search-box mrg-left-20 desktop-view">
+					<a class="search-toggle no-pdd-right" href="">
+						<i class="search-icon ti-search pdd-right-10 font-size-25"></i>
+						<i class="search-icon-close ti-close pdd-right-10 font-size-25"></i>
+					</a>
+				</li>
+				<li class="search-input desktop-view">
+					<input class="form-control mrg-top-0" type="text" placeholder="Search...">
+					<div class="advanced-search">
+						<div class="search-wrapper">
+							<div class="pdd-vertical-10">
+								<ul class="list-unstyled list-info">
+									<li class="search-result-item">
+										<a href="" class="text-dark">#우테코 1기</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<ul class="nav-right padding-15">
+				
+				<li class="">
+					<a class="pointer" href="/articles/new">
+						<i class="ti-pencil-alt"></i>
+					</a>
+				</li>
+				<li>
+					<a class="pointer">
+						<i class="ti-heart"></i>
+					</a>
+				</li>
+				<li>
+					<a class="pointer">
+						<i class="ti-user"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</header>
+	
+	<div class="page-container mrg-top-120">
+		<div class="main-content">
+			<div class="container-fluid max-width-lg mx-auto">
+				<div class="row">
+					<div class="col-lg-7 mx-auto">
+						
+						<div th:each="article : ${articles}" class="card widget-feed no-pdd mrg-btm-70">
+							<div class="feed-header padding-15">
+								<ul class="list-unstyled list-info">
+									<li>
+										<img class="thumb-img img-circle" th:src="${article.profileImage}" alt="">
+										<div class="info">
+											<a th:text="${article.nickName}" href=""
+											   class="title no-pdd-vertical text-bold inline-block font-size-15"></a>
+										</div>
+									</li>
+									<a class="pointer absolute top-10 right-0" data-toggle="dropdown"
+									   aria-expanded="false">
                                         <span class="btn-icon text-dark">
                                             <i class="ti-more font-size-16"></i>
                                         </span>
@@ -214,65 +216,104 @@
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    // const axios = require('axios');
+    const INDEXPAGE = (function () {
 
-    document.querySelector('.search-toggle').addEventListener('click', toggleSearchInput)
-    document.querySelector(".search-input input").addEventListener("keyup", showSearchedList)
-    document.querySelector('.btn-add-comment').addEventListener('click', addComment)
+        const IndexPageController = function () {
+            const indexPageService = new IndexPageService();
 
-    function toggleSearchInput(event) {
-        event.preventDefault();
-        document.querySelector('.search-box').classList.toggle('active')
-        document.querySelector(".search-input").classList.toggle("active")
-        document.querySelector(".search-input input").focus()
-    }
+            const toggleSearchInput = function () {
+                document.querySelector('.search-toggle').addEventListener('click', indexPageService.toggleSearchInput);
+            };
 
-    function showSearchedList(event) {
-        if (event.target.value.length > 0) {
-            document.querySelector(".advanced-search").classList.add("active")
-        } else {
-            document.querySelector(".advanced-search").classList.remove("active")
-        }
-    }
+            const showSearchedList = function () {
+                document.querySelector(".search-input input").addEventListener("keyup", indexPageService.showSearchedList);
+            };
 
-    function addComment(event) {
-        const message = event.target.closest("div");
-        const articleId = message.id.split("-")[2];
-        console.log('articleId : ' + articleId);
+            const addComment = function () {
+                document.querySelector('.btn-add-comment').addEventListener('click', indexPageService.addComment);
+            };
+            const init = function () {
+                toggleSearchInput();
+                showSearchedList();
+                addComment();
+            };
 
-        const inputValue = message.querySelector("input").value;
-        console.log(inputValue);
-
-        let commentList = document.querySelector('#comment-list');
-
-        axios({
-            method: 'post',
-            url: '/' + articleId + '/comments/new',
-            data: {
-                contents: inputValue
+            return {
+                init: init,
             }
-        }).then(res => {
-            console.log(res);
-            const nickName = res.data.commenterNickName;
-            const commentContents = res.data.commentContents;
+        };
 
-            const comment = getCommentTemplate(nickName, commentContents);
-            commentList.insertAdjacentHTML('beforeend', comment);
-            document.getElementById('comment-input').value = '';
-        }).catch(err=>{
-            console.log(err.response);
-        });
+        const IndexPageService = function () {
+            const toggleSearchInput = function (event) {
+                event.preventDefault();
+                document.querySelector('.search-box').classList.toggle('active')
+                document.querySelector(".search-input").classList.toggle("active")
+                document.querySelector(".search-input input").focus()
+            };
 
-    }
+            const showSearchedList = function (event) {
+                if (event.target.value.length > 0) {
+                    document.querySelector(".advanced-search").classList.add("active")
+                } else {
+                    document.querySelector(".advanced-search").classList.remove("active")
+                }
+            };
+          
+             const getCommentTemplate = function (nickName, commentContents) {
+                  return `<li>
+                              <p class="inline-block text-bold  no-mrg-btm mrg-left-15">
+                                  ${nickName}
+                              </p>
+                              <p class="inline-block no-mrg-btm mrg-left-5">${commentContents}</p>
+                        </li>`;
+              }
+          
+            const addComment = function (event) {
+              const message = event.target.closest("div");
+              const articleId = message.id.split("-")[2];
+              console.log('articleId : ' + articleId);
 
-    function getCommentTemplate(nickName, commentContents) {
-        return `<li>
-                    <p class="inline-block text-bold  no-mrg-btm mrg-left-15">
-                        ${nickName}
-                    </p>
-                    <p class="inline-block no-mrg-btm mrg-left-5">${commentContents}</p>
-              </li>`;
-    }
+              const inputValue = message.querySelector("input").value;
+              console.log(inputValue);
+
+              let commentList = document.querySelector('#comment-list');
+
+              axios({
+                  method: 'post',
+                  url: '/' + articleId + '/comments/new',
+                  data: {
+                      contents: inputValue
+                  }
+              }).then(res => {
+                  console.log(res);
+                  const nickName = res.data.commenterNickName;
+                  const commentContents = res.data.commentContents;
+
+                  const comment = getCommentTemplate(nickName, commentContents);
+                  commentList.insertAdjacentHTML('beforeend', comment);
+                  document.getElementById('comment-input').value = '';
+              }).catch(err=>{
+                  console.log(err.response);
+              });
+            
+            };
+            return {
+                toggleSearchInput: toggleSearchInput,
+                showSearchedList: showSearchedList,
+                addComment : addComment,
+            }
+        };
+
+        const init = function () {
+            const indexPageController = new IndexPageController();
+            indexPageController.init();
+        };
+
+        return {
+            init: init,
+        }
+    })();
+    INDEXPAGE.init();
 </script>
 </body>
 </html>

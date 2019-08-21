@@ -21,6 +21,11 @@ public class MemberController {
         return "signup";
     }
 
+    @GetMapping("/mypage")
+    public String myPage() {
+        return "mypage";
+    }
+
     @PostMapping("/members")
     public String saveMember(@Valid MemberSignUpRequest memberSignupRequest) {
         memberService.save(memberSignupRequest);

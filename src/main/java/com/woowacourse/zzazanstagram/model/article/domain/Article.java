@@ -4,6 +4,7 @@ import com.woowacourse.zzazanstagram.model.article.domain.vo.Contents;
 import com.woowacourse.zzazanstagram.model.article.domain.vo.Image;
 import com.woowacourse.zzazanstagram.model.comment.domain.Comment;
 import com.woowacourse.zzazanstagram.model.common.BaseEntity;
+import com.woowacourse.zzazanstagram.model.like.domain.Ddabong;
 import com.woowacourse.zzazanstagram.model.member.domain.Member;
 
 import javax.persistence.*;
@@ -23,6 +24,9 @@ public class Article extends BaseEntity {
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    private List<Ddabong> ddabongs = new ArrayList<>();
+
     protected Article() {
     }
 
@@ -31,6 +35,14 @@ public class Article extends BaseEntity {
         this.contents = contents;
         this.author = author;
         this.comments = new ArrayList<>();
+    }
+
+    public String getDdabongCount() {
+        return String.valueOf(ddabongs.size());
+    }
+
+    public void deleteDdabong(Ddabong ddabong) {
+        ddabongs.remove(ddabong);
     }
 
     public Image getImage() {
@@ -61,4 +73,7 @@ public class Article extends BaseEntity {
         comments.add(comment);
     }
 
+    public List<Ddabong> getDdabongs() {
+        return Collections.unmodifiableList(ddabongs);
+    }
 }

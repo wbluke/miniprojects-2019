@@ -35,4 +35,8 @@ public class MemberService {
         Email email = Email.of(memberSignupRequest.getEmail());
         return memberRepository.existsByNickNameOrEmail(nickName, email);
     }
+
+    public Member find(Long id) {
+        return memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException("잘못된 접근입니다."));
+    }
 }

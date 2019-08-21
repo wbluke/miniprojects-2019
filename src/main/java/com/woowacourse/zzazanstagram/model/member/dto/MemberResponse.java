@@ -6,6 +6,9 @@ public class MemberResponse {
     private String email;
     private String profileImage;
 
+    private MemberResponse() {
+    }
+
     public MemberResponse(String nickName, String name, String email, String profileImage) {
         this.nickName = nickName;
         this.name = name;
