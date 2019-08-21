@@ -5,6 +5,9 @@ public class CommentResponse {
     private Long commentId;
     private String commenterNickName;
 
+    private CommentResponse() {
+    }
+
     public CommentResponse(String commentContents, Long commentId, String commenterNickName) {
         this.commentContents = commentContents;
         this.commentId = commentId;
