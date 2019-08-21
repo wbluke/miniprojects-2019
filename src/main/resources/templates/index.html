@@ -167,10 +167,11 @@
                                                 <time th:text="${article.lastModifiedDate}"
                                                       class="font-size-8 text-gray d-block">12시간 전
                                                 </time>
-                                                <p class="text-gray text-bold no-mrg"
+                                                <a class="text-gray text-bold no-mrg"
                                                    th:if="${#lists.size(article.commentResponses)} > 2"
-                                                   th:text="'댓글 ' + ${#lists.size(article.commentResponses)} + '개 모두보기'">댓글
-                                                    개 모두보기</p>
+                                                   th:text="'댓글 ' + ${#lists.size(article.commentResponses)} + '개 모두보기'"
+                                                href="https://www.facebook.com/photo.php?fbid=10218839206514276&set=a.3550549965490&type=3&eid=ARCGyON074Trey-lkN9xzWXkIcswd6vtGrBYRRT_6lJGY9zjDlpB2_ubHr-3V_mEsEzIHKvTppcn-GU_">댓글
+                                                    개 모두보기</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -251,12 +252,15 @@
                 contents: inputValue
             }
         }).then(res => {
+            console.log(res);
             const nickName = res.data.commenterNickName;
             const commentContents = res.data.commentContents;
 
             const comment = getCommentTemplate(nickName, commentContents);
             commentList.insertAdjacentHTML('beforeend', comment);
             document.getElementById('comment-input').value = '';
+        }).catch(err=>{
+            console.log(err.response);
         });
 
     }
