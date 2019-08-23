@@ -3,7 +3,9 @@ package com.woowacourse.zzazanstagram.model.member.controller;
 import com.woowacourse.zzazanstagram.model.RequestTemplate;
 import com.woowacourse.zzazanstagram.model.support.WebTestHelper;
 import org.junit.jupiter.api.Test;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 class MemberControllerTest extends RequestTemplate {
     private static final String URL_REGEX = "https?://[.\\d\\w]+:?\\d*";
     private static final String JSESSIONID_URL = ";jsessionid=([\\d\\w]+)";
@@ -38,7 +40,7 @@ class MemberControllerTest extends RequestTemplate {
     @Test
     void 회원가입_실패_이메일_중복() {
         postRequest("/members")
-                .body(WebTestHelper.userSignUpForm("test@gmail.com",
+                .body(WebTestHelper.userSignUpForm("abc@naver.com",
                         "myName",
                         "https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-600w-1048185397.jpg",
                         "myNick",
@@ -64,8 +66,8 @@ class MemberControllerTest extends RequestTemplate {
     @Test
     void 로그인_성공() {
         postRequest("/login")
-                .body(WebTestHelper.loginForm("test@gmail.com",
-                        "Password!1"))
+                .body(WebTestHelper.loginForm("abc@naver.com",
+                        "aa1231!!"))
                 .exchange()
                 .expectHeader().valueMatches("location", URL_REGEX + "/" + JSESSIONID_URL)
                 .expectStatus().is3xxRedirection();
