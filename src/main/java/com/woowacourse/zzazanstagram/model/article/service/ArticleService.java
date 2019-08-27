@@ -19,7 +19,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
@@ -90,12 +92,13 @@ public class ArticleService {
     public long countByAuthorId(Long id) {
         return articleRepository.countArticleByAuthorId(id);
     }
-  
-    public List<ArticleResponse> findArticleByTagKeyword(String tagKeyword) {
+
+    public List<ArticleResponse> findArticleByTagKeyword(String tagKeyword, Long id) {
+        Member loginMember = memberService.findById(id);
         return hashTagService.findAllByTagKeyword(tagKeyword)
                 .stream()
                 .map(HashTag::getArticle)
-                .map(ArticleAssembler::toDto)
+                .map(article -> ArticleAssembler.toDto(article, loginMember))
                 .collect(Collectors.toList());
     }
 }
